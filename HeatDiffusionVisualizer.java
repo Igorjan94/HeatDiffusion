@@ -67,15 +67,17 @@ public class HeatDiffusionVisualizer extends JFrame {
 
     public static double R(double x, double T_0, double T_m)
     {
-        return (x - T_0) / (T_m - T_0) * 255;
+        double c = (x - T_0) / (T_m - T_0) - 0.06;
+        if (c < 0)
+            c += 1.0;
+        return c;
     }
 
 	public void draw() {
 		int w = canvas.getWidth(), h = canvas.getHeight();
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-                int r = (int) R(h - y, 0, h);
-				canvas.setRGB(x, y, 0x10000 * r + 0x5000 + 255 - r);
+				canvas.setRGB(x, y, Color.HSBtoRGB((float) R(h - y, 0, h), 1.0f, 1.0f));
 			}
 		}
 
