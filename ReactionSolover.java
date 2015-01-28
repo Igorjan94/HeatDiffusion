@@ -41,6 +41,21 @@ public class ReactionSolover {
         throw new RuntimeException("No such value found: " + name);
     }
 
+    private static class WCalculator
+    {
+        WCalculator(double K, double alpha, double E, double R) {
+            this.K = K;
+            this.alpha = alpha;
+            this.E = E;
+            this.R = R;
+        }
+
+        public double getW(double X, double T) {
+            return K * Math.pow(X, alpha) * Math.exp(-E / R / T);
+        }
+
+        private double K, alpha, E, R;
+    }
     /* The simplest scheme
     X_i^{n+1} - X_i^{n} = dt * (D * (X_{i+1}^{n+1} - 2 * X_i^{n+1} + X_{i-1}^{n+1}) / dz^2 - K * X_{i}^{n+1} * (X_i_n)^(alpha - 1) * exp(-E  / (R * T_i^n))
     T_i^{n+1} - T_i^{n} = dt * (lambda / (rho * c) * (T^{n+1}_{i+1} - 2 * T^n_{i} + T^n_{i-1}) / dz^2 - K * Q / c * (x_i^{n+1})^alpha * exp(-E / (R * T_i^n))
@@ -65,10 +80,12 @@ public class ReactionSolover {
         double[][] T = d[1];
         double[][] W = d[2];
 
+        WCalculator wCalculator = new WCalculator(K, alpha, E, R);
+
         for (int i = 0; i < z_steps; i++) {
             X[0][i] = i == 0 ? 1 : 0;
             T[0][i] = i == 0 ? Tw : T0;
-            W[0][i] = K * Math.pow(X[0][i], alpha) * Math.exp(-E / (R * T[0][i]));
+            W[0][i] = wCalculator.getW(X[0][i], T[0][i]);
         }
 
 //        for (int t = 0; t < n; t++) {
