@@ -86,6 +86,12 @@ public class ReactionSolover {
             W[0][i] = wCalculator.getW(X[0][i], T[0][i]);
         }
 
+        for (int n = 0; n < t_steps; n++) {
+            X[n][0] = 0;
+            T[n][0] = Tw;
+            W[n][0] = wCalculator.getW(X[n][0], T[n][0]);
+        }
+
 //        for (int t = 0; t < n; t++) {
 //            for (int x = 0; x < m; x++) {
 //                d[0][t][x] = sin(a * x + b * t);
