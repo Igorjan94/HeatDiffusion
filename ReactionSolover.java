@@ -90,6 +90,10 @@ public class ReactionSolover {
             X[n][0] = 0;
             T[n][0] = Tw;
             W[n][0] = wCalculator.getW(X[n][0], T[n][0]);
+
+            X[n][z_steps - 1] = 1;
+            T[n][z_steps - 1] = T0;
+            W[n][z_steps - 1] = wCalculator.getW(X[n][z_steps - 1], T[n][z_steps - 1]);
         }
 
 //        for (int t = 0; t < n; t++) {
