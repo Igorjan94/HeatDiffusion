@@ -34,7 +34,7 @@ public class ReactionSolover {
 
     private static PhysicalValue findValue(PhysicalValue[] values, String name) {
         for (PhysicalValue v : values) {
-            if (v.name == name) {
+            if (v.name.equals(name)) {
                 return v;
             }
         }
