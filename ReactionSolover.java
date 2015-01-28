@@ -58,13 +58,11 @@ public class ReactionSolover {
             }
         }
 
-        Graph[] graph = new Graph[]{
+        return new Graph[]{
                 new Graph(d[0], "sin"),
                 new Graph(d[1], "cos"),
                 new Graph(d[2], "sin + cos"),
         };
-
-        return graph;
     }
 
 }
