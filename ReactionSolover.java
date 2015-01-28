@@ -4,6 +4,11 @@ import java.awt.Color;
 
 public class ReactionSolover {
 
+    /*
+    Equations:
+    dX / dt = D * nabla^2 X - W(X, T)
+    dT / dt = lambda / (rho * c) * nabla^2 T + rho * Q * W(X, T)
+     */
     public static PhysicalValue[] getVariables() {
         return new PhysicalValue[]{
                 // These are left for sample
@@ -41,6 +46,10 @@ public class ReactionSolover {
         throw new RuntimeException("No such value found: " + name);
     }
 
+    /* The simplest scheme
+    X_i^{n+1} - X_i^{n} = dt * (D * (X_{i+1}^{n+1} - 2 * X_i^{n+1} + X_{i-1}^{n+1}) / dz^2 - K * X_{i}^{n+1} * (X_i_n)^(alpha - 1) * exp(-E  / (R * T_i^n))
+    T_i^{n+1} - T_i^{n} = dt * (lambda / (rho * c) * (T^{n+1}_{i+1} - 2 * T^n_{i} + T^n_{i-1}) / dz^2 - K * Q / c * (x_i^{n+1})^alpha * exp(-E / (R * T_i^n))
+     */
     public static Graph[] solove(PhysicalValue[] physicalValues) {
         double a = findValue(physicalValues, "a").value;
         double b = findValue(physicalValues, "b").value;
