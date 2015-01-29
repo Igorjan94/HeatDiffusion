@@ -1,10 +1,8 @@
 from math import exp
 
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from tkinter import *
-from matplotlib import cm
 
 # equations:    dX/dt -     D d2X/dz2 =      w(X, T)
 #               dT/dt - kappa d2T/dz2 = -Q/C w(X, T)
@@ -161,17 +159,16 @@ numerical_method_steps = {
 def show_plots(event):
     refresh_parameters()
 
+
     if drawX.get() == 1:
         fig1 = plt.figure()
         xx = fig1.add_subplot(111)
         xx.set_xlabel('z')
-        xx.set_ylabel('X')
 
     if drawT.get() == 1:
         fig2 = plt.figure()
         tx = fig2.add_subplot(111)
         tx.set_xlabel('z')
-        tx.set_ylabel('T')
 
     if drawW.get() == 1:
         fig3 = plt.figure()
@@ -183,25 +180,25 @@ def show_plots(event):
     X, T = generic_scheme(method_step)
     W = [[w(X[n][i], T[n][i]) for i in range(space_steps)] for n in range(time_steps)]
     print('drawing plots...')
-    for i in range(time_steps):
-        if i % rate == 0:
-            time = i * dt
+    for i in range(0, time_steps, rate):
+        xx.set_ylabel('X (time={})'.format(i * dt))
+        tx.set_ylabel('T (time={})'.format(i * dt))
+        wx.set_ylabel('W (time={})'.format(i * dt))
 
-#            times = np.asarray([time] * space_steps)
-            zs = np.linspace(0, space_steps * dz, num=space_steps)
+        zs = np.linspace(0, space_steps * dz, num=space_steps)
 
-            if drawX.get() == 1:
-                xs = np.asarray(X[i])
-                xx.plot(zs, xs)
-                xx.invert_xaxis()
-            if drawT.get() == 1:
-                ts = np.asarray(T[i])
-                tx.plot(zs, ts)
-                tx.invert_xaxis()
-            if drawW.get() == 1:
-                ws = np.asarray(W[i])
-                wx.invert_xaxis()
-                wx.plot(zs, ws)
+        if drawX.get() == 1:
+            xs = np.asarray(X[i])
+            xx.plot(zs, xs)
+            xx.invert_xaxis()
+        if drawT.get() == 1:
+            ts = np.asarray(T[i])
+            tx.plot(zs, ts)
+            tx.invert_xaxis()
+        if drawW.get() == 1:
+            ws = np.asarray(W[i])
+            wx.invert_xaxis()
+            wx.plot(zs, ws)
 
     plt.show()
 
