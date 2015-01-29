@@ -193,11 +193,14 @@ def show_plots(event):
             if drawX.get() == 1:
                 xs = np.asarray(X[i])
                 xx.plot(zs, xs)
+                xx.invert_xaxis()
             if drawT.get() == 1:
                 ts = np.asarray(T[i])
                 tx.plot(zs, ts)
+                tx.invert_xaxis()
             if drawW.get() == 1:
                 ws = np.asarray(W[i])
+                wx.invert_xaxis()
                 wx.plot(zs, ws)
 
     plt.show()
