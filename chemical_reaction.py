@@ -222,6 +222,21 @@ def main():
     pad = Frame(root)
     pad.pack(side='left', padx=10)
 
+    drawX = IntVar()
+    drawX.set(1)
+    cdrawX = Checkbutton(comp, text='Draw X', variable=drawX)
+    cdrawX.pack(sid='top', padx=5, pady=5)
+
+    drawT = IntVar()
+    drawT.set(1)
+    cdrawT = Checkbutton(comp, text='Draw T', variable=drawT)
+    cdrawT.pack(sid='top', padx=5, pady=5)
+
+    drawW = IntVar()
+    drawW.set(1)
+    cdrawW = Checkbutton(comp, text='Draw w', variable=drawW)
+    cdrawW.pack(sid='top', padx=5, pady=5)
+
     lmethod = Label(comp, text='Method:')
     lmethod.pack(side='top', padx=5, pady=5)
     emethod = Entry(comp)
@@ -252,28 +267,13 @@ def main():
     el.insert(0, str(l))
     el.pack(side='top')
 
-    lrate = Label(comp, text='отображать каждый i-й шаг, i:')
+    lrate = Label(comp, text='Step:')
     lrate.pack(side='top', padx=5, pady=5)
     erate = Entry(comp)
     erate.insert(0, str(rate))
     erate.pack(side='top')
 
-    drawX = IntVar()
-    drawX.set(1)
-    cdrawX = Checkbutton(comp, text='график для X', variable=drawX)
-    cdrawX.pack(sid='top', padx=5, pady=5)
-
-    drawT = IntVar()
-    drawT.set(1)
-    cdrawT = Checkbutton(comp, text='график для T', variable=drawT)
-    cdrawT.pack(sid='top', padx=5, pady=5)
-
-    drawW = IntVar()
-    drawW.set(1)
-    cdrawW = Checkbutton(comp, text='график для w', variable=drawW)
-    cdrawW.pack(sid='top', padx=5, pady=5)
-
-    lR = Label(phys, text='R (менять с осторожностью!):')
+    lR = Label(phys, text='R:')
     lR.pack(side='top', padx=5, pady=5)
     eR = Entry(phys)
     eR.insert(0, str(R))
@@ -333,9 +333,9 @@ def main():
     eD.insert(0, str(D))
     eD.pack(side='top')
 
-    plot = Button(phys, text='Draw')
+    plot = Button(comp, text='Start')
     plot.bind("<Button-1>", show_plots)
-    plot.pack(side='top', padx=10, pady=15)
+    plot.pack(side='bottom', padx=10, pady=5)
 
     root.mainloop()
 
