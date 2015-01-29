@@ -99,7 +99,7 @@ def implicit_step(prev_X, prev_T):
     return solve_tridiagonal(aX, bX, cX, dX), solve_tridiagonal(aT, bT, cT, dT)
 
 
-def euler_backward_diag_step(prev_X, prev_T):
+def diagonal_implicit_step(prev_X, prev_T):
     n = len(prev_X)
 
     aX = [-D / dz ** 2 for _ in range(n - 2)] + [0.0]
@@ -116,7 +116,7 @@ def euler_backward_diag_step(prev_X, prev_T):
     return ans_X, solve_tridiagonal(aT, bT, cT, dT)
 
 
-def backward_iterations_step(prev_X, prev_T, iterations=5):
+def backward_implicit_step(prev_X, prev_T, iterations=5):
     n = len(prev_X)
     ans_X, ans_T = prev_X[:], prev_T[:]
     for _ in range(iterations):
@@ -153,9 +153,8 @@ def refresh_parameters():
 numerical_method_steps = {
     'explicit': explicit_step,
     'implicit': implicit_step,
-    # euler_backward_step,
-    # euler_backward_diag_step,
-    # backward_iterations_step
+    'diagonal_implicit': diagonal_implicit_step,
+    'backward_implicit': backward_implicit_step,
 }
 
 
@@ -164,27 +163,24 @@ def show_plots(event):
 
     if drawX.get() == 1:
         fig1 = plt.figure()
-        xx = fig1.add_subplot(111, projection='3d')
+        xx = fig1.add_subplot(111)
         plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
-        xx.set_xlabel('Time')
-        xx.set_ylabel('z')
-        xx.set_zlabel('X')
+        xx.set_xlabel('z')
+        xx.set_ylabel('X')
 
     if drawT.get() == 1:
         fig2 = plt.figure()
-        tx = fig2.add_subplot(111, projection='3d')
+        tx = fig2.add_subplot(111)
         plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
-        tx.set_xlabel('Time')
-        tx.set_ylabel('z')
-        tx.set_zlabel('T')
+        tx.set_xlabel('z')
+        tx.set_ylabel('T')
 
     if drawW.get() == 1:
         fig3 = plt.figure()
-        wx = fig3.add_subplot(111, projection='3d')
+        wx = fig3.add_subplot(111)
         plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
-        wx.set_xlabel('Time')
-        wx.set_ylabel('z')
-        wx.set_zlabel('w')
+        wx.set_xlabel('z')
+        wx.set_ylabel('W')
 
     method_step = numerical_method_steps[method]
     X, T = generic_scheme(method_step)
@@ -194,25 +190,27 @@ def show_plots(event):
         if i % rate == 0:
             time = i * dt
 
-            xs = np.asarray([time] * space_steps)
-            ys = np.linspace(0, space_steps * dz, num=space_steps)
-            zxs = np.asarray(X[i])
-            zts = np.asarray(T[i])
-            zws = np.asarray(W[i])
+#            times = np.asarray([time] * space_steps)
+            zs = np.linspace(0, space_steps * dz, num=space_steps)
+            xs = np.asarray(X[i])
+            ts = np.asarray(T[i])
+            ws = np.asarray(W[i])
 
             if drawX.get() == 1:
-                xx.plot(xs, ys, zxs, color='r')
+                xx.plot(zs, xs)
             if drawT.get() == 1:
-                tx.plot(xs, ys, zts, color='r')
+                tx.plot(zs, ts, color='r')
             if drawW.get() == 1:
-                wx.plot(xs, ys, zws, color='r')
+                wx.plot(zs, ws, color='r')
 
+    """
     if drawX.get() == 1:
         xx.invert_xaxis()
     if drawT.get() == 1:
         tx.invert_xaxis()
     if drawW.get() == 1:
         wx.invert_xaxis()
+    """
 
     plt.show()
 
