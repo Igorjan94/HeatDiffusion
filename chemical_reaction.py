@@ -164,21 +164,18 @@ def show_plots(event):
     if drawX.get() == 1:
         fig1 = plt.figure()
         xx = fig1.add_subplot(111)
-        plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
         xx.set_xlabel('z')
         xx.set_ylabel('X')
 
     if drawT.get() == 1:
         fig2 = plt.figure()
         tx = fig2.add_subplot(111)
-        plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
         tx.set_xlabel('z')
         tx.set_ylabel('T')
 
     if drawW.get() == 1:
         fig3 = plt.figure()
         wx = fig3.add_subplot(111)
-        plt.subplots_adjust(left=0.03, right=0.97, top=0.97, bottom=0.03)
         wx.set_xlabel('z')
         wx.set_ylabel('W')
 
@@ -192,25 +189,16 @@ def show_plots(event):
 
 #            times = np.asarray([time] * space_steps)
             zs = np.linspace(0, space_steps * dz, num=space_steps)
-            xs = np.asarray(X[i])
-            ts = np.asarray(T[i])
-            ws = np.asarray(W[i])
 
             if drawX.get() == 1:
+                xs = np.asarray(X[i])
                 xx.plot(zs, xs)
             if drawT.get() == 1:
-                tx.plot(zs, ts, color='r')
+                ts = np.asarray(T[i])
+                tx.plot(zs, ts)
             if drawW.get() == 1:
-                wx.plot(zs, ws, color='r')
-
-    """
-    if drawX.get() == 1:
-        xx.invert_xaxis()
-    if drawT.get() == 1:
-        tx.invert_xaxis()
-    if drawW.get() == 1:
-        wx.invert_xaxis()
-    """
+                ws = np.asarray(W[i])
+                wx.plot(zs, ws)
 
     plt.show()
 
