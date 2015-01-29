@@ -28,7 +28,7 @@ X_left = 0.0
 X_right = 1.0
 # Computational parameters
 
-method = 'explicit'
+method = 'implicit'
 dt = 1.0
 dz = 0.001
 tau = 2000
